@@ -2413,7 +2413,9 @@ begin
 end;
 {$ENDIF}
 
-{$IFNDEF NEXTGEN}
+{$DEFINE DISABLE_INITIALIZATION}
+{$IFNDEF DISABLE_INITIALIZATION}
+//{$IFNDEF NEXTGEN}
 initialization
   try
     GetEnvironmentPaths;
