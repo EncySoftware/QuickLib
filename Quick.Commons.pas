@@ -295,9 +295,9 @@ type
   function UrlRemoveProtocol(const aUrl : string) : string;
   function UrlRemoveQuery(const aUrl : string) : string;
   function UrlSimpleEncode(const aUrl : string) : string;
+  {$IFDEF MSWINDOWS}
   //get typical environment paths as temp, desktop, etc
   procedure GetEnvironmentPaths;
-  {$IFDEF MSWINDOWS}
   function GetSpecialFolderPath(folderID : Integer) : string;
   //checks if running on a 64bit OS
   function Is64bitOS : Boolean;
@@ -459,11 +459,44 @@ type
   function Ifx(aCondition : Boolean; const aIfIsTrue, aIfIsFalse : TObject) : TObject; overload;
 
 var
-  path : TEnvironmentPath;
   //Enabled if QuickService is defined
   IsQuickServiceApp : Boolean;
+{$IFDEF MSWINDOWS}
+  function Path : TEnvironmentPath;
 
 implementation
+
+var
+  fPath : TEnvironmentPath;
+  fPathInitialized: Boolean;
+
+function Path : TEnvironmentPath;
+begin
+  if not fPathInitialized then begin
+
+    try
+      GetEnvironmentPaths;
+    except
+      {$IFDEF SHOW_ENVIRONMENTPATH_ERRORS}
+      on E : Exception do
+      begin
+        if not IsService then
+        begin
+          if HasConsoleOutput then Writeln(Format('[WARN] GetEnvironmentPaths: %s',[E.Message]))
+            else MessageBox(0,PWideChar(Format('Get environment path error: %s',[E.Message])),'GetEnvironmentPaths',MB_ICONEXCLAMATION);
+        end;
+      end;
+      {$ENDIF}
+    end;
+
+    fPathInitialized := true;
+  end;
+  result := fPath;
+end;
+
+{$ELSE}
+implementation
+{$ENDIF}
 
 {TFileHelper}
 
@@ -471,7 +504,7 @@ implementation
 {$IFDEF MSWINDOWS}
 class function TFileHelper.IsInUse(const FileName : string) : Boolean;
 var
-  HFileRes: HFILE;
+  HFileRes: THandle;
 begin
   Result := False;
   if not FileExists(FileName) then Exit;
@@ -685,37 +718,35 @@ begin
   Result := StringReplace(aUrl,' ','%20',[rfReplaceAll]);
 end;
 
+{$IFDEF MSWINDOWS}
 procedure GetEnvironmentPaths;
 begin
   //gets path
-  path.EXEPATH := TPath.GetDirectoryName(ParamStr(0));
-  {$IFDEF MSWINDOWS}
-  path.WINDOWS := SysUtils.GetEnvironmentVariable('windir');
-  path.PROGRAMFILES := SysUtils.GetEnvironmentVariable('ProgramFiles');
-  path.COMMONFILES := SysUtils.GetEnvironmentVariable('CommonProgramFiles(x86)');
-  path.HOMEDRIVE := SysUtils.GetEnvironmentVariable('SystemDrive');
-  path.USERPROFILE := SysUtils.GetEnvironmentVariable('USERPROFILE');
-  path.PROGRAMDATA := SysUtils.GetEnvironmentVariable('ProgramData');
-  path.ALLUSERSPROFILE := SysUtils.GetEnvironmentVariable('AllUsersProfile');
-  path.INSTDRIVE := path.HOMEDRIVE;
-  path.TEMP := SysUtils.GetEnvironmentVariable('TEMP');
+  fPath.EXEPATH := TPath.GetDirectoryName(ParamStr(0));
+  fPath.WINDOWS := SysUtils.GetEnvironmentVariable('windir');
+  fPath.PROGRAMFILES := SysUtils.GetEnvironmentVariable('ProgramFiles');
+  fPath.COMMONFILES := SysUtils.GetEnvironmentVariable('CommonProgramFiles(x86)');
+  fPath.HOMEDRIVE := SysUtils.GetEnvironmentVariable('SystemDrive');
+  fPath.USERPROFILE := SysUtils.GetEnvironmentVariable('USERPROFILE');
+  fPath.PROGRAMDATA := SysUtils.GetEnvironmentVariable('ProgramData');
+  fPath.ALLUSERSPROFILE := SysUtils.GetEnvironmentVariable('AllUsersProfile');
+  fPath.INSTDRIVE := fPath.HOMEDRIVE;
+  fPath.TEMP := SysUtils.GetEnvironmentVariable('TEMP');
   //these paths fail if user is SYSTEM
   try
-    path.SYSTEM := GetSpecialFolderPath(CSIDL_SYSTEM);
-    path.APPDATA := GetSpecialFolderPath(CSIDL_APPDATA);
-    path.DESKTOP := GetSpecialFolderPath(CSIDL_DESKTOP);
-    path.DESKTOP_ALLUSERS := GetSpecialFolderPath(CSIDL_COMMON_DESKTOPDIRECTORY);
-    path.STARTMENU:=GetSpecialFolderPath(CSIDL_PROGRAMS);
-    path.STARTMENU_ALLUSERS:=GetSpecialFolderPath(CSIDL_COMMON_PROGRAMS);
-    path.STARTMENU_ALLUSERS := path.STARTMENU;
-    path.STARTUP:=GetSpecialFolderPath(CSIDL_STARTUP);
+    fPath.SYSTEM := GetSpecialFolderPath(CSIDL_SYSTEM);
+    fPath.APPDATA := GetSpecialFolderPath(CSIDL_APPDATA);
+    fPath.DESKTOP := GetSpecialFolderPath(CSIDL_DESKTOP);
+    fPath.DESKTOP_ALLUSERS := GetSpecialFolderPath(CSIDL_COMMON_DESKTOPDIRECTORY);
+    fPath.STARTMENU:=GetSpecialFolderPath(CSIDL_PROGRAMS);
+    fPath.STARTMENU_ALLUSERS:=GetSpecialFolderPath(CSIDL_COMMON_PROGRAMS);
+    fPath.STARTMENU_ALLUSERS := fPath.STARTMENU;
+    fPath.STARTUP:=GetSpecialFolderPath(CSIDL_STARTUP);
   except
     //
   end;
-  {$ENDIF}
 end;
 
-{$IFDEF MSWINDOWS}
 function GetSpecialFolderPath(folderID : Integer) : string;
 var
   shellMalloc: IMalloc;
