@@ -123,12 +123,12 @@ type
       fList: TObjectList<T>;
       fLock: TObject;
       fDuplicates: TDuplicates;
-      function GetItem(aIndex : Integer) : T;
-      procedure SetItem(aIndex : Integer; aValue : T);
+      function Get_Item(aIndex : Integer) : T;
+      procedure Set_Item(aIndex : Integer; aValue : T);
     public
       constructor Create(OwnedObjects : Boolean);
       destructor Destroy; override;
-      property Items[Index : Integer] : T read GetItem write SetItem ; default;
+      property Item[Index : Integer] : T read Get_Item write Set_Item ; default;
       procedure Add(const Item: T);
       procedure Clear;
       function LockList: TObjectList<T>;
@@ -1098,7 +1098,7 @@ begin
   end;
 end;
 
-function TThreadObjectList<T>.GetItem(aIndex: Integer): T;
+function TThreadObjectList<T>.Get_Item(aIndex: Integer): T;
 begin
   LockList;
   try
@@ -1129,7 +1129,7 @@ begin
   end;
 end;
 
-procedure TThreadObjectList<T>.SetItem(aIndex: Integer; aValue: T);
+procedure TThreadObjectList<T>.Set_Item(aIndex: Integer; aValue: T);
 begin
   LockList;
   try
