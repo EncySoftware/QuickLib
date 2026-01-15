@@ -1,0 +1,46 @@
+package STQuickLib;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl;
+
+contains
+  Quick.Commons in '..\Quick.Commons.pas',
+  Quick.FaultControl in '..\Quick.FaultControl.pas',
+  Quick.Json.Serializer in '..\Quick.Json.Serializer.pas',
+  Quick.Serializer.Intf in '..\Quick.Serializer.Intf.pas',
+  Quick.Base64 in '..\Quick.Base64.pas',
+  Quick.JSON.Utils in '..\Quick.JSON.Utils.pas',
+  Quick.RTTI.Utils in '..\Quick.RTTI.Utils.pas',
+  Quick.SysInfo in '..\Quick.SysInfo.pas',
+  Quick.Threads in '..\Quick.Threads.pas',
+  Quick.Value in '..\Quick.Value.pas';
+
+end.
