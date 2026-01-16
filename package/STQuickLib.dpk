@@ -41,6 +41,7 @@ contains
   Quick.RTTI.Utils in '..\Quick.RTTI.Utils.pas',
   Quick.SysInfo in '..\Quick.SysInfo.pas',
   Quick.Threads in '..\Quick.Threads.pas',
-  Quick.Value in '..\Quick.Value.pas';
+  Quick.Value in '..\Quick.Value.pas',
+  Quick.Logger.Intf in '..\Quick.Logger.Intf.pas';
 
 end.

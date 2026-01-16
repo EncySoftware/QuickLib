@@ -138,6 +138,7 @@
         <DCCReference Include="..\Quick.SysInfo.pas"/>
         <DCCReference Include="..\Quick.Threads.pas"/>
         <DCCReference Include="..\Quick.Value.pas"/>
+        <DCCReference Include="..\Quick.Logger.Intf.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
