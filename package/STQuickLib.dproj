@@ -141,6 +141,7 @@
         <DCCReference Include="..\Quick.Logger.Intf.pas"/>
         <DCCReference Include="..\Quick.Console.pas"/>
         <DCCReference Include="..\Quick.Log.pas"/>
+        <DCCReference Include="..\Quick.SyncObjs.Linux.Compatibility.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

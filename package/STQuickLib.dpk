@@ -44,6 +44,7 @@ contains
   Quick.Value in '..\Quick.Value.pas',
   Quick.Logger.Intf in '..\Quick.Logger.Intf.pas',
   Quick.Console in '..\Quick.Console.pas',
-  Quick.Log in '..\Quick.Log.pas';
+  Quick.Log in '..\Quick.Log.pas',
+  Quick.SyncObjs.Linux.Compatibility in '..\Quick.SyncObjs.Linux.Compatibility.pas';
 
 end.
