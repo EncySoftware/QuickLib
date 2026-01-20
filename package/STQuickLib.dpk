@@ -42,6 +42,8 @@ contains
   Quick.SysInfo in '..\Quick.SysInfo.pas',
   Quick.Threads in '..\Quick.Threads.pas',
   Quick.Value in '..\Quick.Value.pas',
-  Quick.Logger.Intf in '..\Quick.Logger.Intf.pas';
+  Quick.Logger.Intf in '..\Quick.Logger.Intf.pas',
+  Quick.Console in '..\Quick.Console.pas',
+  Quick.Log in '..\Quick.Log.pas';
 
 end.

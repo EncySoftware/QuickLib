@@ -139,6 +139,8 @@
         <DCCReference Include="..\Quick.Threads.pas"/>
         <DCCReference Include="..\Quick.Value.pas"/>
         <DCCReference Include="..\Quick.Logger.Intf.pas"/>
+        <DCCReference Include="..\Quick.Console.pas"/>
+        <DCCReference Include="..\Quick.Log.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -180,7 +182,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\23.0\Bpl\Win64\STQuickLib.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="bin\Win64\STQuickLib.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win64">
                         <RemoteName>STQuickLib.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
