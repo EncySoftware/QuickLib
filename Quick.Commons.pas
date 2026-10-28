@@ -122,7 +122,7 @@ type
 
   {$IFNDEF FPC}
   TFileHelper = record helper for TFile
-    {$IF DEFINED(MSWINDOWS) OR DEFINED(DELPHILINUX)}
+    {$IF DEFINED(MSWINDOWS) OR DEFINED(DELPHILINUX) OR DEFINED(MACOS)}
     class function IsInUse(const FileName : string) : Boolean; static;
     {$ENDIF}
     class function GetSize(const FileName: String): Int64; static;
@@ -525,6 +525,19 @@ begin
   except
     Result := True;
   end;
+end;
+{$ENDIF}
+{$IFDEF MACOS}
+class function TFileHelper.IsInUse(const FileName: string): Boolean;
+var
+  FileHandle: THandle;
+begin
+  if not FileExists(FileName) then
+    Exit(False);
+  FileHandle := FileOpen(FileName, fmOpenReadWrite or fmShareExclusive);
+  Result := FileHandle = THandle(-1);
+  if not Result then
+    FileClose(FileHandle);
 end;
 {$ENDIF}
 {$IFDEF DELPHILINUX}

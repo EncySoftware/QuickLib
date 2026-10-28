@@ -1,4 +1,4 @@
-﻿{
+{
     This file is part of QuickLib: https://github.com/exilon/QuickLib
 
     QuickLibs. Copyright (C) 2024 Kike Pérez
@@ -132,7 +132,7 @@
       {$define DELPHIRX104_UP}
 	    {$define DELPHISYDNEY_UP}
       {$UNDEF DELPHILINUX}
-      {$if defined(POSIX)}
+      {$if defined(POSIX) AND NOT defined(MACOS)}
         {$if defined(CPUARM)}
           {$if defined(MACOS)}
 
@@ -152,7 +152,7 @@
       {$define DELPHIRX11_UP}
 	    {$define DELPHIALEXANDRIA_UP}
       {$UNDEF DELPHILINUX}
-      {$if defined(POSIX)}
+      {$if defined(POSIX) AND NOT defined(MACOS)}
         {$DEFINE LINUX}
         {$if defined(CPUARM)}
           {$if defined(MACOS)}
@@ -173,7 +173,7 @@
       {$define DELPHIRX12_UP}
 	    {$define DELPHIATHENS_UP}
       {$UNDEF DELPHILINUX}
-      {$if defined(POSIX)}
+      {$if defined(POSIX) AND NOT defined(MACOS)}
         {$DEFINE LINUX}
         {$if defined(CPUARM)}
           {$if defined(MACOS)}
